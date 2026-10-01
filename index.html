@@ -72,16 +72,19 @@ footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size
 <div class="meta"><span id="dot" class="dot bad"></span><span id="st">ต่อ…</span><br><span id="cd">—</span></div></div>
 
 <div class="pxb">
+  <div style="font:600 10.5px var(--fd);letter-spacing:.1em;color:var(--mu);text-transform:uppercase">XAU/USD · ทองคำสด</div>
   <div class="pxtop">
     <span class="pxbig" id="pxb">—</span>
     <span class="pxchg" id="pxc">—</span>
   </div>
   <div class="pxsub">
-    <span>24 ชม. <b id="px24">—</b></span>
-    <span>สูง <b id="pxh">—</b></span>
+    <span>สูง 24 ชม. <b id="pxh">—</b></span>
     <span>ต่ำ <b id="pxl">—</b></span>
     <span id="pxt">—</span>
   </div>
+  <div class="pxsub"><span>แหล่ง <b id="pxsrc">—</b></span>
+    <span>ราคาที่ใช้ทำแท่งเทียน <b id="pxref">—</b></span>
+    <span>ต่าง <b id="pxbas">—</b></span></div>
   <canvas id="spk" width="520" height="104" aria-label="กราฟราคา 5 ชั่วโมงล่าสุด"></canvas>
   <div class="pxsub" style="margin-top:4px">
     <span>EMA20 M5 <b id="e20v">—</b></span>
@@ -102,10 +105,11 @@ footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size
   <div class="r"><span class="k">ระยะ SL จากราคาเข้า</span><span class="v lg" id="sd">—</span></div>
   <div class="r"><span class="k">ระยะ TP จากราคาเข้า</span><span class="v lg" id="td">—</span></div>
   <div class="r"><span class="k">เลื่อน SL มาจุดเข้าเมื่อกำไรถึง</span><span class="v" id="lk">—</span></div>
-  <div style="margin-top:10px"><label for="fp">ราคาที่เข้าได้จริง (พิมพ์ตอนกดเท่านั้น)</label>
-    <input id="fp" type="number" step="0.01" inputmode="decimal" placeholder="เช่น 4198.35"></div>
-  <div class="r" style="margin-top:8px"><span class="k">→ ตั้ง SL ที่ราคา</span><span class="v lg" id="slp">—</span></div>
+  <div class="r"><span class="k">→ ตั้ง SL ที่ราคา</span><span class="v lg" id="slp">—</span></div>
   <div class="r"><span class="k">→ ตั้ง TP ที่ราคา</span><span class="v lg" id="tpp">—</span></div>
+  <p class="hint">คิดจากราคา XAU/USD สดด้านบน ถ้าราคาที่เข้าได้จริงใน MT5 ต่างไป ใส่ที่นี่เพื่อคำนวณใหม่</p>
+  <div style="margin-top:7px"><label for="fp">ราคาที่เข้าได้จริงจาก MT5 (ไม่ใส่ก็ได้)</label>
+    <input id="fp" type="number" step="0.01" inputmode="decimal" placeholder="ว่างไว้ = ใช้ราคาสด"></div>
 </div>
 
 <h2>ความเสี่ยงและต้นทุน</h2>
@@ -121,7 +125,6 @@ footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size
 
 <h2>ค่าที่ใช้คำนวณ (อัตโนมัติ)</h2>
 <div class="card">
-  <div class="r"><span class="k">ราคาทองอ้างอิงสด</span><span class="v" id="px">—</span></div>
   <div class="r"><span class="k">ATR รายวัน (จากฟีดสด)</span><span class="v" id="ad">—</span></div>
   <div class="r"><span class="k">ATR M5 ของ XAUUSD (ประมาณ)</span><span class="v" id="a5">—</span></div>
   <details style="margin-top:9px"><summary style="cursor:pointer;font-size:12.5px;color:var(--br);font-weight:600">ประมาณมาจากอะไร</summary>
@@ -137,7 +140,7 @@ footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size
 </div>
 
 <h2>สัญญาณที่เกิดขึ้น</h2>
-<div class="card"><table id="lt"><thead><tr><th>เวลา</th><th>ฝั่ง</th><th class="n">ราคาอ้างอิง</th><th class="n">SL</th><th class="n">TP</th></tr></thead><tbody></tbody></table>
+<div class="card"><table id="lt"><thead><tr><th>เวลา</th><th>ฝั่ง</th><th class="n">ราคา XAUUSD</th><th class="n">SL</th><th class="n">TP</th></tr></thead><tbody></tbody></table>
 <p class="hint" id="ls">ยังไม่มีสัญญาณในรอบนี้</p>
 <button class="gh" id="cp">คัดลอกเป็น CSV ส่งให้ Claude</button></div>
 
@@ -146,7 +149,7 @@ footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size
 มันบอกแค่ "จังหวะที่เข้าได้ตามกฎ" เพื่อให้บอสเทรดเป็นระบบและวัดผลตัวเองได้ ไม่ใช่เพื่อรับประกันกำไร</div>
 
 <footer>SL = 2×ATR(M5) · TP = 2×SL · lot 0.01 · ทอง 0.01 lot Standard: ราคาขยับ $1 = $1<br>
-คำนวณจากแท่งที่ปิดแล้วเท่านั้น · รีเฟรชทุก 15 วินาที · ฟีดหลัก Binance PAXG สำรอง OKX XAUT</footer>
+คำนวณจากแท่งที่ปิดแล้วเท่านั้น · รีเฟรชทุก 15 วินาที · ราคา XAU/USD จาก gold-api (สำรอง Coinbase) · แท่งเทียนจาก PAXG/XAUT</footer>
 
 <script>
 const $=i=>document.getElementById(i);
@@ -209,8 +212,9 @@ function check(){
   if(!hit){lastBar=bar.t;return}
   lastBar=bar.t;
   const A=atrM5();
+  const bs=(BASIS===null?0:BASIS), pz=bar.c+bs;
   const rec={t:new Date(bar.t+300000).toISOString().replace('T',' ').slice(0,16),
-    dir:d, px:bar.c, sl:d>0?bar.c-2*A:bar.c+2*A, tp:d>0?bar.c+4*A:bar.c-4*A, atr:A};
+    dir:d, px:pz, sl:d>0?pz-2*A:pz+2*A, tp:d>0?pz+4*A:pz-4*A, atr:A};
   const L=log(); L.push(rec); try{localStorage.setItem(LL,JSON.stringify(L.slice(-60)))}catch(e){}
   fire(rec); logDraw();
 }
@@ -233,33 +237,48 @@ function logDraw(){const L=log(),tb=$('lt').querySelector('tbody');tb.textConten
 
 
 /* ---- ราคาสด ดึงทุก 2 วินาที (เบากว่า klines มาก) ---- */
-let lastPx=null, px24=null;
+let lastPx=null, px24=null, SPOT=null, SRC='', BASIS=null;
+async function spot(){
+  try{const r=await fetch('https://api.gold-api.com/price/XAU',{cache:'no-store'});
+    if(r.ok){const j=await r.json(); if(+j.price>0)return {p:+j.price,s:'gold-api'}}}catch(e){}
+  try{const r=await fetch('https://api.coinbase.com/v2/prices/XAU-USD/spot',{cache:'no-store'});
+    if(r.ok){const j=await r.json(); const v=+j.data.amount; if(v>0)return {p:v,s:'Coinbase'}}}catch(e){}
+  return null;
+}
 async function tick(){
-  try{
-    const r=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=PAXGUSDT',{cache:'no-store'});
-    if(!r.ok)throw 0; const j=await r.json();
-    const p=+j.lastPrice;
-    const el=$('pxb');
-    if(lastPx!==null&&p!==lastPx){el.classList.remove('up','dn');void el.offsetWidth;
-      el.classList.add(p>lastPx?'up':'dn');}
-    el.textContent=F(p);
-    lastPx=p; px24=j;
-    const ch=+j.priceChange, pc=+j.priceChangePercent;
+  const sp=await spot();
+  if(sp){SPOT=sp.p; SRC=sp.s;}
+  let j=null;
+  try{const r=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=PAXGUSDT',{cache:'no-store'});
+    if(r.ok)j=await r.json();}catch(e){}
+  if(j)px24=j;
+  if(SPOT===null&&j)  {SPOT=+j.lastPrice; SRC='PAXG (สำรอง)';}
+  if(SPOT===null)return;
+  const el=$('pxb');
+  if(lastPx!==null&&SPOT!==lastPx){el.classList.remove('up','dn');void el.offsetWidth;
+    el.classList.add(SPOT>lastPx?'up':'dn');}
+  el.textContent=F(SPOT); lastPx=SPOT;
+  $('pxsrc').textContent=SRC;
+  if(j){
+    const pc=+j.priceChangePercent, ch=SPOT*pc/100;
     const c=$('pxc'); c.className='pxchg '+(ch>=0?'up':'dn');
-    c.textContent=(ch>=0?'▲ +':'▼ ')+F(Math.abs(ch))+'  ('+(pc>=0?'+':'')+pc.toFixed(2)+'%)';
-    $('px24').textContent=(ch>=0?'+':'')+F(ch);
-    $('pxh').textContent=F(+j.highPrice); $('pxl').textContent=F(+j.lowPrice);
-    $('pxt').textContent='อัปเดต '+new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    if(D)emaRows();
-  }catch(e){}
+    c.textContent=(ch>=0?'\u25B2 +':'\u25BC ')+F(Math.abs(ch))+'  ('+(pc>=0?'+':'')+pc.toFixed(2)+'%)';
+    const ref=+j.lastPrice; BASIS=SPOT-ref;
+    $('pxref').textContent='$'+F(ref);
+    $('pxbas').textContent=(BASIS>=0?'+':'')+F(BASIS);
+    $('pxh').textContent=F(+j.highPrice+BASIS); $('pxl').textContent=F(+j.lowPrice+BASIS);
+  }
+  $('pxt').textContent='อัปเดต '+new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  if(D){emaRows(); spark();}
 }
 function emaRows(){
   if(!D)return;
-  const n=D.e20.length-1, e20=D.e20[n], p=lastPx!==null?lastPx:D.price;
+  const n=D.e20.length-1, bs=(BASIS===null?0:BASIS);
+  const e20=D.e20[n]+bs, p=(SPOT!==null?SPOT:D.price+bs);
   $('e20v').textContent=F(e20);
   const d=p-e20;
   $('e20d').textContent=(d>=0?'+':'')+F(d);
-  $('e50v').textContent=F(D.s5.e);
+  $('e50v').textContent=F(D.s5.e+bs);
 }
 /* ---- กราฟเล็ก: ราคา M5 + EMA20 ---- */
 function spark(){
@@ -268,12 +287,12 @@ function spark(){
   const w=cv.clientWidth||520, h=52;
   if(cv.width!==Math.round(w*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);}
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
-  const N=Math.min(60,D.m5.length);
-  const bars=D.m5.slice(-N), e20=D.e20.slice(-N);
+  const N=Math.min(60,D.m5.length), bs=(BASIS===null?0:BASIS);
+  const bars=D.m5.slice(-N).map(b=>({o:b.o+bs,h:b.h+bs,l:b.l+bs,c:b.c+bs})), e20=D.e20.slice(-N).map(v=>v+bs);
   let lo=Infinity,hi=-Infinity;
   bars.forEach(b=>{lo=Math.min(lo,b.l);hi=Math.max(hi,b.h)});
   e20.forEach(v=>{lo=Math.min(lo,v);hi=Math.max(hi,v)});
-  if(lastPx!==null){lo=Math.min(lo,lastPx);hi=Math.max(hi,lastPx)}
+  if(SPOT!==null){lo=Math.min(lo,SPOT);hi=Math.max(hi,SPOT)}
   const pad=(hi-lo)*0.12||1; lo-=pad; hi+=pad;
   const X=i=>i*(w-2)/(N-1)+1, Y=v=>h-3-((v-lo)/(hi-lo))*(h-6);
   const cs=getComputedStyle(document.documentElement);
@@ -292,7 +311,7 @@ function spark(){
   g.beginPath(); bars.forEach((b,i)=>i?g.lineTo(X(i),Y(b.c)):g.moveTo(X(i),Y(b.c)));
   g.strokeStyle=col; g.lineWidth=1.8; g.stroke();
   // จุดราคาสด
-  const pv=lastPx!==null?lastPx:bars[N-1].c;
+  const pv=SPOT!==null?SPOT:bars[N-1].c;
   g.beginPath(); g.arc(X(N-1),Y(pv),3.2,0,7); g.fillStyle=col; g.fill();
 }
 
@@ -304,7 +323,7 @@ function draw(){
     const set=(id,o,l)=>{const u=o.c>o.e;const el=$(id);el.className=u?'u':'d';
       el.innerHTML=l+'<b>'+(u?'เหนือ':'ใต้')+'</b>'};
     set('t5',D.s5,'M5');set('t15',D.s15,'M15');set('t60',D.s60,'H1');
-    $('px').textContent='$'+F(D.price); $('ad').textContent='$'+F(D.adr);
+    $('ad').textContent='$'+F(D.adr);
     $('a5').textContent='$'+F(A)+(getOv()?' (จาก MT5)':'');
     const L=log(), last=L[L.length-1];
     const fresh = last && (Date.now()-new Date(last.t.replace(' ','T')+'Z').getTime() < 1800000);
@@ -320,8 +339,10 @@ function draw(){
   const vd=isFinite(A)&&A>0;
   $('sd').textContent=vd?'$'+F(2*A):'—'; $('td').textContent=vd?'$'+F(4*A):'—';
   $('lk').textContent=vd?'+$'+F(2*A):'—';
-  const fp=+$('fp').value;
-  if(vd&&d&&fp>0){$('slp').textContent=F(d>0?fp-2*A:fp+2*A);$('tpp').textContent=F(d>0?fp+4*A:fp-4*A)}
+  const fpv=+$('fp').value;
+  const base=(fpv>0)?fpv:(SPOT!==null?SPOT:NaN);
+  if(vd&&d&&isFinite(base)){$('slp').textContent=F(d>0?base-2*A:base+2*A);
+    $('tpp').textContent=F(d>0?base+4*A:base-4*A)}
   else{$('slp').textContent='—';$('tpp').textContent='—'}
   const cap=+$('cap').value||0, fq=+$('fq').value||0;
   if(vd){const rk=2*A*FX, w=4*A*FX;
@@ -352,6 +373,6 @@ $('cp').addEventListener('click',async()=>{const L=log();
     v.px.toFixed(2),v.sl.toFixed(2),v.tp.toFixed(2),v.atr.toFixed(3)].join(',')).join('\n');
   try{await navigator.clipboard.writeText(csv);$('ls').textContent='คัดลอกแล้ว '+L.length+' สัญญาณ'}
   catch(e){$('ls').textContent='คัดลอกไม่ได้ ให้เลือกข้อความในตารางเอง'}});
-logDraw(); pull(); tick(); setInterval(pull,15000); setInterval(tick,2000); setInterval(draw,1000);
+logDraw(); pull(); tick(); setInterval(pull,15000); setInterval(tick,3000); setInterval(draw,1000);
 window.addEventListener('resize',()=>spark());
 </script></body></html>
