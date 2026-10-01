@@ -18,6 +18,15 @@ h1{font-size:17px;margin:0}
 .meta{font:11px var(--fn);color:var(--mu);text-align:right;line-height:1.4}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--go);margin-right:4px}
 .dot.bad{background:var(--st)}
+.pxb{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:13px 14px;margin-bottom:12px}
+.pxtop{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pxbig{font:700 36px/1 var(--fn);font-variant-numeric:tabular-nums;letter-spacing:-.02em;transition:color .25s}
+.pxbig.up{color:var(--go)}.pxbig.dn{color:var(--st)}
+.pxchg{font:600 13px var(--fn);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pxchg.up{color:var(--go)}.pxchg.dn{color:var(--st)}
+.pxsub{display:flex;gap:14px;flex-wrap:wrap;margin-top:7px;font:11.5px var(--fd);color:var(--mu)}
+.pxsub b{font-family:var(--fn);font-variant-numeric:tabular-nums;color:var(--fg);font-weight:600}
+canvas{display:block;width:100%;height:52px;margin-top:9px}
 .sig{border-radius:14px;padding:18px 16px;border:2px solid;text-align:center}
 .sig .b{font:700 30px/1.1 var(--fd);letter-spacing:-.02em;margin:0 0 5px}
 .sig .s{font-size:12.5px;margin:0;color:var(--fg)}
@@ -61,6 +70,25 @@ footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size
 
 <div class="top"><h1>สัญญาณทอง M5</h1>
 <div class="meta"><span id="dot" class="dot bad"></span><span id="st">ต่อ…</span><br><span id="cd">—</span></div></div>
+
+<div class="pxb">
+  <div class="pxtop">
+    <span class="pxbig" id="pxb">—</span>
+    <span class="pxchg" id="pxc">—</span>
+  </div>
+  <div class="pxsub">
+    <span>24 ชม. <b id="px24">—</b></span>
+    <span>สูง <b id="pxh">—</b></span>
+    <span>ต่ำ <b id="pxl">—</b></span>
+    <span id="pxt">—</span>
+  </div>
+  <canvas id="spk" width="520" height="104" aria-label="กราฟราคา 5 ชั่วโมงล่าสุด"></canvas>
+  <div class="pxsub" style="margin-top:4px">
+    <span>EMA20 M5 <b id="e20v">—</b></span>
+    <span>ห่าง <b id="e20d">—</b></span>
+    <span>EMA50 M5 <b id="e50v">—</b></span>
+  </div>
+</div>
 
 <div id="sig" class="sig sl"><p class="b" id="sb">กำลังโหลด</p><p class="s" id="ss">ดึงราคาทองสด</p><p class="tm" id="sm"></p></div>
 <button id="snd" class="gh">เปิดเสียงเตือนเมื่อมีสัญญาณ</button>
@@ -203,6 +231,71 @@ function logDraw(){const L=log(),tb=$('lt').querySelector('tbody');tb.textConten
     tb.appendChild(tr)});
   $('lt').hidden=L.length===0; $('ls').textContent=L.length?('มี '+L.length+' สัญญาณที่บันทึกไว้'):'ยังไม่มีสัญญาณในรอบนี้';}
 
+
+/* ---- ราคาสด ดึงทุก 2 วินาที (เบากว่า klines มาก) ---- */
+let lastPx=null, px24=null;
+async function tick(){
+  try{
+    const r=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=PAXGUSDT',{cache:'no-store'});
+    if(!r.ok)throw 0; const j=await r.json();
+    const p=+j.lastPrice;
+    const el=$('pxb');
+    if(lastPx!==null&&p!==lastPx){el.classList.remove('up','dn');void el.offsetWidth;
+      el.classList.add(p>lastPx?'up':'dn');}
+    el.textContent=F(p);
+    lastPx=p; px24=j;
+    const ch=+j.priceChange, pc=+j.priceChangePercent;
+    const c=$('pxc'); c.className='pxchg '+(ch>=0?'up':'dn');
+    c.textContent=(ch>=0?'▲ +':'▼ ')+F(Math.abs(ch))+'  ('+(pc>=0?'+':'')+pc.toFixed(2)+'%)';
+    $('px24').textContent=(ch>=0?'+':'')+F(ch);
+    $('pxh').textContent=F(+j.highPrice); $('pxl').textContent=F(+j.lowPrice);
+    $('pxt').textContent='อัปเดต '+new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    if(D)emaRows();
+  }catch(e){}
+}
+function emaRows(){
+  if(!D)return;
+  const n=D.e20.length-1, e20=D.e20[n], p=lastPx!==null?lastPx:D.price;
+  $('e20v').textContent=F(e20);
+  const d=p-e20;
+  $('e20d').textContent=(d>=0?'+':'')+F(d);
+  $('e50v').textContent=F(D.s5.e);
+}
+/* ---- กราฟเล็ก: ราคา M5 + EMA20 ---- */
+function spark(){
+  const cv=$('spk'); if(!cv||!D||!D.m5.length)return;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const w=cv.clientWidth||520, h=52;
+  if(cv.width!==Math.round(w*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);}
+  const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+  const N=Math.min(60,D.m5.length);
+  const bars=D.m5.slice(-N), e20=D.e20.slice(-N);
+  let lo=Infinity,hi=-Infinity;
+  bars.forEach(b=>{lo=Math.min(lo,b.l);hi=Math.max(hi,b.h)});
+  e20.forEach(v=>{lo=Math.min(lo,v);hi=Math.max(hi,v)});
+  if(lastPx!==null){lo=Math.min(lo,lastPx);hi=Math.max(hi,lastPx)}
+  const pad=(hi-lo)*0.12||1; lo-=pad; hi+=pad;
+  const X=i=>i*(w-2)/(N-1)+1, Y=v=>h-3-((v-lo)/(hi-lo))*(h-6);
+  const cs=getComputedStyle(document.documentElement);
+  const up=bars[N-1].c>=bars[0].c;
+  const col=cs.getPropertyValue(up?'--go':'--st').trim()||'#2f6b43';
+  // พื้นที่ใต้เส้นราคา
+  g.beginPath(); g.moveTo(X(0),Y(bars[0].c));
+  bars.forEach((b,i)=>g.lineTo(X(i),Y(b.c)));
+  g.lineTo(X(N-1),h); g.lineTo(X(0),h); g.closePath();
+  g.globalAlpha=.13; g.fillStyle=col; g.fill(); g.globalAlpha=1;
+  // เส้น EMA20
+  g.beginPath(); e20.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));
+  g.strokeStyle=cs.getPropertyValue('--br').trim()||'#9a7726';
+  g.lineWidth=1; g.setLineDash([3,3]); g.stroke(); g.setLineDash([]);
+  // เส้นราคา
+  g.beginPath(); bars.forEach((b,i)=>i?g.lineTo(X(i),Y(b.c)):g.moveTo(X(i),Y(b.c)));
+  g.strokeStyle=col; g.lineWidth=1.8; g.stroke();
+  // จุดราคาสด
+  const pv=lastPx!==null?lastPx:bars[N-1].c;
+  g.beginPath(); g.arc(X(N-1),Y(pv),3.2,0,7); g.fillStyle=col; g.fill();
+}
+
 function draw(){
   const now=new Date(), s=now.getUTCSeconds()+60*(now.getUTCMinutes()%5);
   $('cd').textContent='แท่งปิดอีก '+Math.max(0,300-s)+' วิ'+(ok?' · '+Math.round((Date.now()-ok)/1000)+' วิก่อน':'');
@@ -238,6 +331,7 @@ function draw(){
     const r=cap>0?rk/cap:0;
     $('sv').textContent=(r>0&&r<1)?Math.floor(Math.log(.5)/Math.log(1-r))+' ไม้':'—';
   }else{['rk','wn','sv'].forEach(i=>$(i).textContent='—');$('rp').textContent='—'}
+  spark(); emaRows();
   const yb=SPREAD*FX*fq*52, sp=cap>0?100*yb/cap:NaN;
   $('sy').innerHTML=isFinite(sp)?B(yb)+' <span class="pill '+(sp<=25?'ok':sp<=60?'w':'b')+'">'+Math.round(sp)+'%/ปี</span>':'—';
 }
@@ -258,5 +352,6 @@ $('cp').addEventListener('click',async()=>{const L=log();
     v.px.toFixed(2),v.sl.toFixed(2),v.tp.toFixed(2),v.atr.toFixed(3)].join(',')).join('\n');
   try{await navigator.clipboard.writeText(csv);$('ls').textContent='คัดลอกแล้ว '+L.length+' สัญญาณ'}
   catch(e){$('ls').textContent='คัดลอกไม่ได้ ให้เลือกข้อความในตารางเอง'}});
-logDraw(); pull(); setInterval(pull,15000); setInterval(draw,1000);
+logDraw(); pull(); tick(); setInterval(pull,15000); setInterval(tick,2000); setInterval(draw,1000);
+window.addEventListener('resize',()=>spark());
 </script></body></html>
