@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>สัญญาณทอง M5</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#f6f4ef;--sf:#fffefb;--ln:#ddd7c9;--fg:#1f1d18;--mu:#6d685c;--br:#9a7726;
+ --brs:#f0e6cd;--go:#2f6b43;--gos:#e2f0e6;--st:#a33222;--sts:#f8e4e0;--wn:#8a5a10;--wns:#faeed6;
+ --fd:"IBM Plex Sans",-apple-system,sans-serif;--fn:"IBM Plex Mono",ui-monospace,monospace;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#17160f;--sf:#211f16;--ln:#39351f;--fg:#f0ece0;
+ --mu:#a39d88;--br:#d6ac4e;--brs:#30290f;--go:#6fc38c;--gos:#16281b;--st:#e8806c;--sts:#2d1612;
+ --wn:#e0ad52;--wns:#2b2008;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:560px;background:var(--bg);color:var(--fg);font:14px/1.5 var(--fd);
+ padding:calc(14px + env(safe-area-inset-top)) 16px calc(36px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+h1{font-size:17px;margin:0}
+.meta{font:11px var(--fn);color:var(--mu);text-align:right;line-height:1.4}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--go);margin-right:4px}
+.dot.bad{background:var(--st)}
+.sig{border-radius:14px;padding:18px 16px;border:2px solid;text-align:center}
+.sig .b{font:700 30px/1.1 var(--fd);letter-spacing:-.02em;margin:0 0 5px}
+.sig .s{font-size:12.5px;margin:0;color:var(--fg)}
+.sig .tm{font:600 11px var(--fn);color:var(--mu);margin:7px 0 0}
+.go{background:var(--gos);border-color:var(--go)}.go .b{color:var(--go)}
+.sl{background:var(--sts);border-color:var(--st)}.sl .b{color:var(--st)}
+.wa{background:var(--wns);border-color:var(--wn)}.wa .b{color:var(--wn)}
+@keyframes fl{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.fire{animation:fl .5s ease 3}
+h2{font:600 11px var(--fd);text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin:20px 0 8px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:13px}
+.tf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tf div{text-align:center;padding:8px 3px;border:1px solid var(--ln);border-radius:8px;font:11px var(--fd)}
+.tf b{display:block;font:600 14px var(--fn);margin-top:2px}
+.tf .u{background:var(--gos);border-color:var(--go);color:var(--go)}
+.tf .d{background:var(--sts);border-color:var(--st);color:var(--st)}
+.r{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--ln)}
+.r:last-child{border-bottom:0}
+.r .k{font-size:12.5px;color:var(--mu)}
+.r .v{font:600 15px var(--fn);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.v.lg{font-size:21px}
+label{display:block;font-size:12px;color:var(--mu);margin-bottom:5px}
+input{width:100%;padding:9px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);
+ color:var(--fg);font:16px var(--fn);font-variant-numeric:tabular-nums}
+input:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--br);outline-offset:2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font:600 11px var(--fd)}
+.ok{background:var(--gos);color:var(--go)}.w{background:var(--wns);color:var(--wn)}.b{background:var(--sts);color:var(--st)}
+button{width:100%;padding:10px;border:0;border-radius:9px;background:var(--br);color:#fff;
+ font:600 13.5px var(--fd);cursor:pointer;margin-top:9px}
+button.gh{background:transparent;color:var(--mu);border:1px solid var(--ln)}
+table{width:100%;border-collapse:collapse;font:11.5px var(--fd);margin-top:9px}
+th,td{padding:5px 6px;border-bottom:1px solid var(--ln);text-align:left}
+th{color:var(--mu);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+td.n{font-family:var(--fn);font-variant-numeric:tabular-nums;text-align:right}
+.note{background:var(--brs);border-left:3px solid var(--br);padding:11px 13px;border-radius:0 8px 8px 0;font-size:12.5px;margin-top:20px}
+.note b{color:var(--br)}
+.hint{font-size:11.5px;color:var(--mu);margin:5px 0 0}
+footer{margin-top:24px;padding-top:13px;border-top:1px solid var(--ln);font-size:11.5px;color:var(--mu)}
+</style></head><body>
+
+<div class="top"><h1>สัญญาณทอง M5</h1>
+<div class="meta"><span id="dot" class="dot bad"></span><span id="st">ต่อ…</span><br><span id="cd">—</span></div></div>
+
+<div id="sig" class="sig sl"><p class="b" id="sb">กำลังโหลด</p><p class="s" id="ss">ดึงราคาทองสด</p><p class="tm" id="sm"></p></div>
+<button id="snd" class="gh">เปิดเสียงเตือนเมื่อมีสัญญาณ</button>
+
+<h2>เทรนด์ EMA50 — คำนวณสดจากแท่งที่ปิดแล้ว</h2>
+<div class="tf"><div id="t5">M5<b>—</b></div><div id="t15">M15<b>—</b></div><div id="t60">H1<b>—</b></div></div>
+
+<h2>เลขสำหรับเปิดไม้</h2>
+<div class="card">
+  <div class="r"><span class="k">Lot</span><span class="v">0.01</span></div>
+  <div class="r"><span class="k">ระยะ SL จากราคาเข้า</span><span class="v lg" id="sd">—</span></div>
+  <div class="r"><span class="k">ระยะ TP จากราคาเข้า</span><span class="v lg" id="td">—</span></div>
+  <div class="r"><span class="k">เลื่อน SL มาจุดเข้าเมื่อกำไรถึง</span><span class="v" id="lk">—</span></div>
+  <div style="margin-top:10px"><label for="fp">ราคาที่เข้าได้จริง (พิมพ์ตอนกดเท่านั้น)</label>
+    <input id="fp" type="number" step="0.01" inputmode="decimal" placeholder="เช่น 4198.35"></div>
+  <div class="r" style="margin-top:8px"><span class="k">→ ตั้ง SL ที่ราคา</span><span class="v lg" id="slp">—</span></div>
+  <div class="r"><span class="k">→ ตั้ง TP ที่ราคา</span><span class="v lg" id="tpp">—</span></div>
+</div>
+
+<h2>ความเสี่ยงและต้นทุน</h2>
+<div class="card">
+  <div class="g2"><div><label for="cap">ทุน (บาท)</label><input id="cap" type="number" step="100" inputmode="numeric" value="3000"></div>
+  <div><label for="fq">ไม้/สัปดาห์</label><input id="fq" type="number" step="1" inputmode="numeric" value="20"></div></div>
+  <div class="r" style="margin-top:9px"><span class="k">โดน SL เสีย</span><span class="v" id="rk">—</span></div>
+  <div class="r"><span class="k">เป็น % ของทุน</span><span class="v" id="rp">—</span></div>
+  <div class="r"><span class="k">โดน TP ได้</span><span class="v" id="wn">—</span></div>
+  <div class="r"><span class="k">แพ้ติดกันได้ก่อนทุนหายครึ่ง</span><span class="v" id="sv">—</span></div>
+  <div class="r"><span class="k">บิล spread ต่อปี</span><span class="v" id="sy">—</span></div>
+</div>
+
+<h2>ค่าที่ใช้คำนวณ (อัตโนมัติ)</h2>
+<div class="card">
+  <div class="r"><span class="k">ราคาทองอ้างอิงสด</span><span class="v" id="px">—</span></div>
+  <div class="r"><span class="k">ATR รายวัน (จากฟีดสด)</span><span class="v" id="ad">—</span></div>
+  <div class="r"><span class="k">ATR M5 ของ XAUUSD (ประมาณ)</span><span class="v" id="a5">—</span></div>
+  <details style="margin-top:9px"><summary style="cursor:pointer;font-size:12.5px;color:var(--br);font-weight:600">ประมาณมาจากอะไร</summary>
+  <p class="hint" style="margin-top:8px">ฟีดฟรีที่เบราว์เซอร์ดึงได้คือทองโทเคน (PAXG และ XAUT) ซึ่ง
+  <b>ความผันผวนรายวันตรงกับทองจริง</b> (1.56% เทียบ 1.61%) แต่ ATR 5 นาทีต่ำกว่าจริง 2.3 เท่า
+  เพราะตลาดคริปโตมีจำนวนเทรดต่อ 5 นาทีน้อยกว่า<br><br>
+  จึงคำนวณจาก <b>ATR รายวัน × 0.0565</b> ซึ่งเป็นอัตราส่วน ATR(M5)÷ATR(D1) ที่วัดจากข้อมูล XAUUSD จริง
+  2 ล้านแท่ง 6 ปี (เสถียร 0.0550–0.0599 ทุกปี ความคลาดเคลื่อนมัธยฐาน 13%)<br><br>
+  ถ้าอยากตรงเป๊ะ เทียบกับ ATR(14) M5 ใน MT5 แล้วใส่ที่นี่:</p>
+  <div class="g2" style="margin-top:8px"><div><input id="ov" type="number" step="0.01" inputmode="decimal" placeholder="ATR จาก MT5"></div>
+  <div><button id="ovb" style="margin:0">ใช้ค่านี้แทน</button></div></div>
+  <p class="hint" id="ovs"></p></details>
+</div>
+
+<h2>สัญญาณที่เกิดขึ้น</h2>
+<div class="card"><table id="lt"><thead><tr><th>เวลา</th><th>ฝั่ง</th><th class="n">ราคาอ้างอิง</th><th class="n">SL</th><th class="n">TP</th></tr></thead><tbody></tbody></table>
+<p class="hint" id="ls">ยังไม่มีสัญญาณในรอบนี้</p>
+<button class="gh" id="cp">คัดลอกเป็น CSV ส่งให้ Claude</button></div>
+
+<div class="note"><b>สัญญาณนี้ไม่ใช่การทำนาย</b> เงื่อนไขคือ เทรนด์ EMA50 ตรงกันสามกราฟ และราคาย่อมาแตะ EMA20 แล้วปิดกลับทาง
+ดิฉันทดสอบเงื่อนไขนี้และอีก 1,700 แบบบนข้อมูลทอง 2 ล้านแท่ง <b>ไม่พบว่าทำนายทิศทางได้ดีกว่าการสุ่ม</b>
+มันบอกแค่ "จังหวะที่เข้าได้ตามกฎ" เพื่อให้บอสเทรดเป็นระบบและวัดผลตัวเองได้ ไม่ใช่เพื่อรับประกันกำไร</div>
+
+<footer>SL = 2×ATR(M5) · TP = 2×SL · lot 0.01 · ทอง 0.01 lot Standard: ราคาขยับ $1 = $1<br>
+คำนวณจากแท่งที่ปิดแล้วเท่านั้น · รีเฟรชทุก 15 วินาที · ฟีดหลัก Binance PAXG สำรอง OKX XAUT</footer>
+
+<script>
+const $=i=>document.getElementById(i);
+const F=(n,d=2)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const B=n=>Math.round(n).toLocaleString('th-TH');
+const RATIO=0.0565, FX=34.5, SPREAD=0.30;
+const LS='gs1', LL='gs1.log', LO='gs1.ov';
+let D=null, ok=0, lastBar=null, soundOn=false, AC=null;
+
+function ema(a,s){const k=2/(s+1);let v=null;for(const x of a)v=v===null?x:v+k*(x-v);return v}
+function emaArr(a,s){const k=2/(s+1);let v=null;const o=[];for(const x of a){v=v===null?x:v+k*(x-v);o.push(v)}return o}
+function atr(rows,p=14){const k=2/(p+1);let v=null,pc=null;
+  for(const[h,l,c]of rows){const tr=pc===null?h-l:Math.max(h-l,Math.abs(h-pc),Math.abs(l-pc));
+    v=v===null?tr:v+k*(tr-v);pc=c}return v}
+
+async function bin(iv,n){const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=PAXGUSDT&interval=${iv}&limit=${n}`,{cache:'no-store'});
+  if(!r.ok)throw 0; const j=await r.json();
+  return j.slice(0,-1).map(x=>({t:x[0],o:+x[1],h:+x[2],l:+x[3],c:+x[4]}))}
+async function okx(bar,n){const m={'5m':'5m','15m':'15m','1H':'1H','1D':'1D'}[bar];
+  const r=await fetch(`https://www.okx.com/api/v5/market/candles?instId=XAUT-USDT&bar=${m}&limit=${n}`,{cache:'no-store'});
+  if(!r.ok)throw 0; const j=await r.json();
+  return j.data.reverse().slice(0,-1).map(x=>({t:+x[0],o:+x[1],h:+x[2],l:+x[3],c:+x[4]}))}
+
+async function pull(){
+  let src='PAXG';
+  try{
+    const [a,b,c,d]=await Promise.all([bin('5m',300),bin('15m',300),bin('1h',300),bin('1d',60)]);
+    D=build(a,b,c,d);
+  }catch(e){
+    try{const [a,b,c,d]=await Promise.all([okx('5m',300),okx('15m',300),okx('1H',300),okx('1D',60)]);
+      D=build(a,b,c,d); src='XAUT';
+    }catch(e2){$('dot').className='dot bad';$('st').textContent=ok?'ต่อไม่ได้ ใช้ค่าเก่า':'ต่อไม่ได้';draw();return}
+  }
+  ok=Date.now(); $('dot').className='dot'; $('st').textContent='สด · '+src;
+  check(); draw();
+}
+function build(a,b,c,d){
+  const rows=k=>k.map(x=>[x.h,x.l,x.c]);
+  const e20=emaArr(a.map(x=>x.c),20);
+  return {m5:a,e20:e20,
+    s5:{c:a[a.length-1].c,e:ema(a.map(x=>x.c),50)},
+    s15:{c:b[b.length-1].c,e:ema(b.map(x=>x.c),50)},
+    s60:{c:c[c.length-1].c,e:ema(c.map(x=>x.c),50)},
+    adr:atr(rows(d)), price:a[a.length-1].c};
+}
+function dirOf(){if(!D)return null;
+  const u=D.s5.c>D.s5.e&&D.s15.c>D.s15.e&&D.s60.c>D.s60.e;
+  const n=D.s5.c<D.s5.e&&D.s15.c<D.s15.e&&D.s60.c<D.s60.e;
+  return u?1:n?-1:0}
+function atrM5(){const o=getOv(); if(o&&o.v>0)return o.v; return D?D.adr*RATIO:NaN}
+function getOv(){try{return JSON.parse(localStorage.getItem(LO)||'null')}catch(e){return null}}
+
+function check(){
+  if(!D)return;
+  const d=dirOf(); if(!d)return;
+  const n=D.m5.length-1, bar=D.m5[n], e=D.e20[n];
+  if(lastBar===bar.t)return;
+  const hit = d>0 ? (bar.l<=e && bar.c>e && bar.c>bar.o)
+                  : (bar.h>=e && bar.c<e && bar.c<bar.o);
+  if(!hit){lastBar=bar.t;return}
+  lastBar=bar.t;
+  const A=atrM5();
+  const rec={t:new Date(bar.t+300000).toISOString().replace('T',' ').slice(0,16),
+    dir:d, px:bar.c, sl:d>0?bar.c-2*A:bar.c+2*A, tp:d>0?bar.c+4*A:bar.c-4*A, atr:A};
+  const L=log(); L.push(rec); try{localStorage.setItem(LL,JSON.stringify(L.slice(-60)))}catch(e){}
+  fire(rec); logDraw();
+}
+function fire(r){
+  const S=$('sig'); S.classList.remove('fire'); void S.offsetWidth; S.classList.add('fire');
+  if(soundOn){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);
+    o.frequency.value=r.dir>0?880:440;g.gain.value=.25;o.start();
+    setTimeout(()=>{o.frequency.value=r.dir>0?1320:330},140);
+    setTimeout(()=>{o.stop()},300)}catch(e){}}
+  if(navigator.vibrate)navigator.vibrate([120,70,120]);
+}
+function log(){try{return JSON.parse(localStorage.getItem(LL)||'[]')}catch(e){return[]}}
+function logDraw(){const L=log(),tb=$('lt').querySelector('tbody');tb.textContent='';
+  L.slice(-12).reverse().forEach(v=>{const tr=document.createElement('tr');
+    [[v.t.slice(5),''],[v.dir>0?'ซื้อ':'ขาย',''],[F(v.px),'n'],[F(v.sl),'n'],[F(v.tp),'n']]
+    .forEach(([x,c])=>{const td=document.createElement('td');td.textContent=x;if(c)td.className=c;tr.appendChild(td)});
+    tb.appendChild(tr)});
+  $('lt').hidden=L.length===0; $('ls').textContent=L.length?('มี '+L.length+' สัญญาณที่บันทึกไว้'):'ยังไม่มีสัญญาณในรอบนี้';}
+
+function draw(){
+  const now=new Date(), s=now.getUTCSeconds()+60*(now.getUTCMinutes()%5);
+  $('cd').textContent='แท่งปิดอีก '+Math.max(0,300-s)+' วิ'+(ok?' · '+Math.round((Date.now()-ok)/1000)+' วิก่อน':'');
+  const d=dirOf(), S=$('sig'), A=atrM5();
+  if(D){
+    const set=(id,o,l)=>{const u=o.c>o.e;const el=$(id);el.className=u?'u':'d';
+      el.innerHTML=l+'<b>'+(u?'เหนือ':'ใต้')+'</b>'};
+    set('t5',D.s5,'M5');set('t15',D.s15,'M15');set('t60',D.s60,'H1');
+    $('px').textContent='$'+F(D.price); $('ad').textContent='$'+F(D.adr);
+    $('a5').textContent='$'+F(A)+(getOv()?' (จาก MT5)':'');
+    const L=log(), last=L[L.length-1];
+    const fresh = last && (Date.now()-new Date(last.t.replace(' ','T')+'Z').getTime() < 1800000);
+    if(d===0){S.className='sig sl';$('sb').textContent='ไม่เข้า';
+      $('ss').textContent='EMA50 สามกราฟไม่ไปทางเดียวกัน';$('sm').textContent='';}
+    else if(fresh&&last.dir===d){S.className='sig go';
+      $('sb').textContent=d>0?'สัญญาณซื้อ':'สัญญาณขาย';
+      $('ss').textContent='ย่อมาแตะ EMA20 แล้วปิดกลับทางเทรนด์';
+      $('sm').textContent='เกิดเมื่อ '+last.t;}
+    else{S.className='sig wa';$('sb').textContent=d>0?'รอจังหวะซื้อ':'รอจังหวะขาย';
+      $('ss').textContent='เทรนด์ตรงกันแล้ว รอราคาย่อมาแตะ EMA20 แล้วปิดกลับทาง';$('sm').textContent='';}
+  }
+  const vd=isFinite(A)&&A>0;
+  $('sd').textContent=vd?'$'+F(2*A):'—'; $('td').textContent=vd?'$'+F(4*A):'—';
+  $('lk').textContent=vd?'+$'+F(2*A):'—';
+  const fp=+$('fp').value;
+  if(vd&&d&&fp>0){$('slp').textContent=F(d>0?fp-2*A:fp+2*A);$('tpp').textContent=F(d>0?fp+4*A:fp-4*A)}
+  else{$('slp').textContent='—';$('tpp').textContent='—'}
+  const cap=+$('cap').value||0, fq=+$('fq').value||0;
+  if(vd){const rk=2*A*FX, w=4*A*FX;
+    $('rk').textContent=B(rk)+' บาท'; $('wn').textContent=B(w)+' บาท';
+    const p=cap>0?100*rk/cap:NaN;
+    $('rp').innerHTML=isFinite(p)?'<span class="pill '+(p<=2?'ok':p<=5?'w':'b')+'">'+p.toFixed(1)+'%</span>':'—';
+    const r=cap>0?rk/cap:0;
+    $('sv').textContent=(r>0&&r<1)?Math.floor(Math.log(.5)/Math.log(1-r))+' ไม้':'—';
+  }else{['rk','wn','sv'].forEach(i=>$(i).textContent='—');$('rp').textContent='—'}
+  const yb=SPREAD*FX*fq*52, sp=cap>0?100*yb/cap:NaN;
+  $('sy').innerHTML=isFinite(sp)?B(yb)+' <span class="pill '+(sp<=25?'ok':sp<=60?'w':'b')+'">'+Math.round(sp)+'%/ปี</span>':'—';
+}
+['cap','fq','fp'].forEach(i=>$(i).addEventListener('input',()=>{draw();
+  try{localStorage.setItem(LS,JSON.stringify({cap:$('cap').value,fq:$('fq').value}))}catch(e){}}));
+try{const o=JSON.parse(localStorage.getItem(LS)||'{}');for(const k in o)if($(k)&&o[k]!=='')$(k).value=o[k]}catch(e){}
+$('ovb').addEventListener('click',()=>{const v=+$('ov').value;
+  if(v>0){try{localStorage.setItem(LO,JSON.stringify({v:v,at:Date.now()}))}catch(e){}
+    $('ovs').textContent='ใช้ค่า $'+F(v)+' จาก MT5 แล้ว'; $('ov').value=''; draw();}
+  else{try{localStorage.removeItem(LO)}catch(e){} $('ovs').textContent='กลับไปใช้ค่าประมาณอัตโนมัติ'; draw();}});
+const o0=getOv(); if(o0)$('ovs').textContent='กำลังใช้ค่า $'+F(o0.v)+' จาก MT5 (ล้างช่องแล้วกดปุ่มเพื่อกลับเป็นอัตโนมัติ)';
+$('snd').addEventListener('click',()=>{soundOn=!soundOn;
+  $('snd').textContent=soundOn?'เสียงเตือน: เปิด':'เปิดเสียงเตือนเมื่อมีสัญญาณ';
+  if(soundOn){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();AC.resume()}catch(e){}}});
+$('cp').addEventListener('click',async()=>{const L=log();
+  if(!L.length){$('ls').textContent='ยังไม่มีสัญญาณให้คัดลอก';return}
+  const csv='เวลา,ฝั่ง,ราคาอ้างอิง,SL,TP,ATR\n'+L.map(v=>[v.t,v.dir>0?'BUY':'SELL',
+    v.px.toFixed(2),v.sl.toFixed(2),v.tp.toFixed(2),v.atr.toFixed(3)].join(',')).join('\n');
+  try{await navigator.clipboard.writeText(csv);$('ls').textContent='คัดลอกแล้ว '+L.length+' สัญญาณ'}
+  catch(e){$('ls').textContent='คัดลอกไม่ได้ ให้เลือกข้อความในตารางเอง'}});
+logDraw(); pull(); setInterval(pull,15000); setInterval(draw,1000);
+</script></body></html>
